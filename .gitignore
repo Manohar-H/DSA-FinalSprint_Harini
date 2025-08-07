@@ -1,3 +1,23 @@
-# Default ignored files
-/shelf/
-/.idea/
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+# Build output
+/target/
+
+# Logs
+*.log
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+
+# Dependency caching
+.mvn/wrapper/maven-wrapper.jar
+
+# IDE working files
+.shelf/
