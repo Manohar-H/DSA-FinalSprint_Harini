@@ -2,24 +2,31 @@ package com.harini.DSA.controller;
 
 import com.harini.DSA.bst.BinarySearchTree;
 import com.harini.DSA.bst.TreeNode;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.util.*;
 
-@RestController
+@Controller
 public class TreeController {
 
-    @PostMapping("/process-numbers")
-    public ResponseEntity<Map<String, Object>> processNumbers(@RequestBody Map<String, String> request) {
-        String numbersString = request.get("numbers");
+    @GetMapping("/enter-numbers")
+    public String enterNumbersForm() {
+        return "enter-numbers";  // maps to enter-numbers.html under templates/
+    }
 
-        if (numbersString == null || numbersString.trim().isEmpty()) {
-            return ResponseEntity.badRequest().body(Map.of("error", "Input numbers are required."));
+    @PostMapping("/submit-numbers")
+    public String handleFormSubmit(@RequestParam("numbers") String numbers, Model model) {
+        if (numbers == null || numbers.trim().isEmpty()) {
+            model.addAttribute("error", "Please enter numbers.");
+            return "enter-numbers";
         }
 
         try {
-            List<Integer> numberList = parseNumbers(numbersString);
+            List<Integer> numberList = parseNumbers(numbers);
             BinarySearchTree bst = new BinarySearchTree();
             for (int num : numberList) {
                 bst.insert(num);
@@ -28,14 +35,21 @@ public class TreeController {
             TreeNode root = bst.getRoot();
             Map<String, Object> treeAsMap = bst.toMap(root);
 
-            return ResponseEntity.ok(treeAsMap);
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.enable(SerializationFeature.INDENT_OUTPUT);
+            String treeJson = mapper.writeValueAsString(treeAsMap);
 
+            model.addAttribute("treeJson", treeJson);
         } catch (NumberFormatException e) {
-            return ResponseEntity.badRequest().body(Map.of("error", "Please enter valid integers separated by commas."));
+            model.addAttribute("error", "Please enter only valid integers separated by commas.");
+        } catch (Exception e) {
+            model.addAttribute("error", "An error occurred: " + e.getMessage());
         }
+
+        return "enter-numbers";
     }
 
-    private List<Integer> parseNumbers(String input) throws NumberFormatException {
+    private List<Integer> parseNumbers(String input) {
         String[] parts = input.split(",");
         List<Integer> numbers = new ArrayList<>();
         for (String part : parts) {

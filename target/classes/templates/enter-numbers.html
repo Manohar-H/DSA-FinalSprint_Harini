@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Enter Numbers</title>
+</head>
+<body>
+<h1>Enter Numbers</h1>
+
+<form action="/submit-numbers" method="post">
+    <input type="text" name="numbers" placeholder="e.g. 1,2,3" required>
+    <button type="submit">Submit</button>
+</form>
+
+<!-- Error display -->
+<div th:if="${error}">
+    <p style="color: red;" th:text="${error}"></p>
+</div>
+
+<!-- Tree display -->
+<div th:if="${treeJson}">
+    <h3>BST Output:</h3>
+    <pre th:text="${treeJson}"></pre>
+</div>
+
+    <!-- Hidden element to store JSON -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        let treeData = /*[[${treeJson}]]*/ {};
+        /*]]>*/
+    </script>
+
+    <!-- Visual rendering script -->
+    <script>
+        function renderTree(node, container) {
+            if (!node) return;
+
+            const div = document.createElement("div");
+            div.style.marginLeft = "20px";
+            div.textContent = `Value: ${node.value}`;
+            container.appendChild(div);
+
+            if (node.left) {
+                const leftLabel = document.createElement("div");
+                leftLabel.textContent = "Left:";
+                leftLabel.style.marginLeft = "10px";
+                container.appendChild(leftLabel);
+                renderTree(node.left, container);
+            }
+
+            if (node.right) {
+                const rightLabel = document.createElement("div");
+                rightLabel.textContent = "Right:";
+                rightLabel.style.marginLeft = "10px";
+                container.appendChild(rightLabel);
+                renderTree(node.right, container);
+            }
+        }
+
+        const container = document.getElementById("treeContainer");
+        renderTree(treeData, container);
+    </script>
+</div>
+
+</body>
+</html>
