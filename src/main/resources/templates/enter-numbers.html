@@ -1,66 +1,97 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>Enter Numbers</title>
-</head>
-<body>
-<h1>Enter Numbers</h1>
-
-<form action="/submit-numbers" method="post">
-    <input type="text" name="numbers" placeholder="e.g. 1,2,3" required>
-    <button type="submit">Submit</button>
-</form>
-
-<!-- Error display -->
-<div th:if="${error}">
-    <p style="color: red;" th:text="${error}"></p>
-</div>
-
-<!-- Tree display -->
-<div th:if="${treeJson}">
-    <h3>BST Output:</h3>
-    <pre th:text="${treeJson}"></pre>
-</div>
-
-    <!-- Hidden element to store JSON -->
-    <script th:inline="javascript">
-        /*<![CDATA[*/
-        let treeData = /*[[${treeJson}]]*/ {};
-        /*]]>*/
-    </script>
-
-    <!-- Visual rendering script -->
-    <script>
-        function renderTree(node, container) {
-            if (!node) return;
-
-            const div = document.createElement("div");
-            div.style.marginLeft = "20px";
-            div.textContent = `Value: ${node.value}`;
-            container.appendChild(div);
-
-            if (node.left) {
-                const leftLabel = document.createElement("div");
-                leftLabel.textContent = "Left:";
-                leftLabel.style.marginLeft = "10px";
-                container.appendChild(leftLabel);
-                renderTree(node.left, container);
-            }
-
-            if (node.right) {
-                const rightLabel = document.createElement("div");
-                rightLabel.textContent = "Right:";
-                rightLabel.style.marginLeft = "10px";
-                container.appendChild(rightLabel);
-                renderTree(node.right, container);
-            }
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fadee8;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
         }
 
-        const container = document.getElementById("treeContainer");
-        renderTree(treeData, container);
-    </script>
-</div>
+        .container {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            width: 600px;
+        }
 
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            width: 70%;
+            margin-right: 10px;
+            font-size: 1rem;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #EDA4BD;
+            color: black;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        input[type="submit"]:hover {
+            background-color: white;
+            color: black;
+            border: 1px solid #EDA4BD;
+        }
+
+        .output {
+            background-color: #fadee8;
+            border-radius: 8px;
+            padding: 20px;
+            white-space: pre-wrap;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 18px;
+            color: black;
+            overflow-x: auto;
+            max-height: 400px;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Enter Numbers</h1>
+
+    <form th:action="@{/submit-numbers}" method="post">
+        <input type="text" name="numbers" placeholder="e.g. 1,2,3" />
+        <input type="submit" value="Submit" />
+    </form>
+
+    <div th:if="${error}" class="error" th:text="${error}"></div>
+
+    <div th:if="${treeJson}">
+        <h3>BST Output:</h3>
+        <div class="output" th:text="${treeJson}"></div>
+    </div>
+</div>
 </body>
 </html>
