@@ -65,5 +65,4 @@ public class BinarySearchTree {
             throw new RuntimeException("Failed to convert to JSON", e);
         }
     }
-
 }
