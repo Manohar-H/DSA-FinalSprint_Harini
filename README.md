@@ -98,12 +98,12 @@ If the “Build a balanced BST” checkbox is selected, the numbers are first so
 
 ---
 
-## Learning Outcomes:
+### Learning Outcomes:
 
-•	Reinforced understanding of Binary Search Trees and balancing algorithms.
-•	Practiced Spring Boot MVC architecture.
-•	Gained experience with frontend-backend integration.
-•	Learned to persist and retrieve structured data with JPA.
+- Reinforced understanding of Binary Search Trees and balancing algorithms.
+- Practiced Spring Boot MVC architecture.
+- Gained experience with frontend-backend integration.
+- Learned to persist and retrieve structured data with JPA.
 
 ---
 
