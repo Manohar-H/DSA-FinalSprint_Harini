@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Previous Trees</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fadee8;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            width: 600px;
+        }
+
+        h1 {
+            font-size: 28px;
+            padding: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+            background-color: #fadee8;
+            border: 1px solid #fadee8;
+            border-radius: 10px;
+        }
+
+        .output {
+            background-color: #fadee8;
+            border-radius: 8px;
+            padding: 10px;
+            white-space: pre-wrap;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 18px;
+            color: black;
+            overflow-x: auto;
+            max-height: 400px;
+        }
+
+         a {
+            padding: 7px 10px;
+            background-color: #EDA4BD;
+            color: black;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        a:hover {
+            background-color: white;
+            color: black;
+            border: 1px solid #EDA4BD;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Previous Tree Record</h1>
+
+        <div th:block th:each="record : ${records}">
+            <br>
+            <strong>Input: </strong>
+            <div class="output" th:text="${record.input}"></div><br>
+            <strong>Output: </strong>
+            <div class="output" th:text="${record.treeJson}"></div>
+            <hr><br>
+        </div>
+
+        <a href="/enter-numbers">Back to Main</a>
+    </div>
+</body>
+
+</html>

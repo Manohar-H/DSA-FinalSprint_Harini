@@ -22,9 +22,12 @@
 
         h1 {
             font-size: 28px;
-            margin-bottom: 20px;
+            padding: 10px;
+            margin-bottom: 30px;
             text-align: center;
-            color: #333;
+            background-color: #fadee8;
+            border: 1px solid #fadee8;
+            border-radius: 10px;
         }
 
         form {
@@ -61,7 +64,7 @@
         .output {
             background-color: #fadee8;
             border-radius: 8px;
-            padding: 20px;
+            padding: 10px;
             white-space: pre-wrap;
             font-family: 'Courier New', Courier, monospace;
             font-size: 18px;
@@ -86,10 +89,16 @@
         <input type="submit" value="Submit" />
     </form>
 
+    <br>
+
+    <form action="/previous-trees" method="get">
+        <input type="submit" value="Show Previous" />
+    </form>
+
     <div th:if="${error}" class="error" th:text="${error}"></div>
 
     <div th:if="${treeJson}">
-        <h3>BST Output:</h3>
+        <strong>Binary Search Output:</strong>
         <div class="output" th:text="${treeJson}"></div>
     </div>
 </div>
